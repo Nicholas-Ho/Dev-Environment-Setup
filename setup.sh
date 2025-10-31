@@ -8,12 +8,12 @@
 # Setup symlink to .vimrc. Assumes .vimrc source is in a ./vim directory relative to this script.
 src_dir=$(dirname $(realpath "$0"))
 vimrc_src="${src_dir}/vim/.vimrc"
-ln -s ${vimrc_src} "~/.vimrc"
+ln -s ${vimrc_src} ~/.vimrc
 
 # Copy autoload files to ~/.vim/autoload
 autoload_src="${src_dir}/vim/autoload"
 mkdir -p ~/.vim/autoload
-cp -r ${autoload_src} "~/.vim/autoload"
+cp -r ${autoload_src} ~/.vim/autoload
 
 
 # === Installing packages ===
@@ -21,7 +21,7 @@ cp -r ${autoload_src} "~/.vim/autoload"
 og_dir=$(pwd)
 
 # Make a temporary directory for installations
-tmp_dir="~/.tmpdir"
+tmp_dir=~/.tmpdir
 mkdir ${tmp_dir}
 cd ${tmp_dir}
 
