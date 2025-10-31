@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 
 # Setup script for personal workspace on Ubuntu
 
