@@ -1,3 +1,4 @@
+" WSL2 only
 function! CopyExternal() range
     let n = @n
     silent! normal gv"ny
