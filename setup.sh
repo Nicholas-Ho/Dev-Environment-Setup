@@ -22,7 +22,7 @@ og_dir=$(pwd)
 
 # Make a temporary directory for installations
 tmp_dir=~/.tmpdir
-mkdir ${tmp_dir}
+mkdir -p ${tmp_dir}
 cd ${tmp_dir}
 
 # Cleanup temporary directory on exit
@@ -42,7 +42,7 @@ sudo dpkg -i bat_0.26.0_amd64.deb
 
 # fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+~/.fzf/install --key-bindings --completion --no-update-rc
 
 # code-minimap
 curl -LO https://github.com/wfxr/code-minimap/releases/download/v0.6.8/code-minimap_0.6.8_amd64.deb
