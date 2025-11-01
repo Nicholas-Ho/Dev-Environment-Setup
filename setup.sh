@@ -85,3 +85,6 @@ cd ${og_dir}
 # Add to .bashrc. Assumes shellrc.sh source is in a ./bash directory relative to this script.Assumes .vimrc source is in a ./vim directory relative to this script.
 shellrc_src="${src_dir}/bash/shellrc.sh"
 echo -e "\n# Personal shell setup\nsource ${shellrc_src}" >> ~/.bashrc
+
+# Run .bashrc for final setup
+source ~/.bashrc
