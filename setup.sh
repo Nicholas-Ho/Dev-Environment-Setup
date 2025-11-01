@@ -48,6 +48,33 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 curl -LO https://github.com/wfxr/code-minimap/releases/download/v0.6.8/code-minimap_0.6.8_amd64.deb
 sudo dpkg -i code-minimap_0.6.8_amd64.deb
 
+
+# === Install language servers ===
+
+# Ensure that all necessary package managers are installed
+sudo apt install -y python3-pip # pip3
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash # nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+nvm install node # node and npm
+
+# Python. Must install pip3 first
+pip3 install -U python-lsp-server
+
+# C/C++
+sudo apt-get install -y clangd-12
+sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
+
+# Bash. Must install npm first
+sudo apt install shellcheck
+npm install -g bash-language-server
+
+# Vim. Must install npm first
+npm install -g vim-language-server
+
+# YAML. Must install npm first
+npm install -g yaml-language-server
+
 cd ${og_dir}
 
 
