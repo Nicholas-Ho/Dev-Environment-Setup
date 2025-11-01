@@ -63,7 +63,7 @@ Plug 'wellle/context.vim'
 Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
-colorscheme nord
+silent! colorscheme nord
 set termguicolors
 " hi Normal guibg='#1A202C'
 hi Normal guibg=NONE
