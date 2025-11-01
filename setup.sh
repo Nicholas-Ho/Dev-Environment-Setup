@@ -51,6 +51,8 @@ sudo dpkg -i code-minimap_0.6.8_amd64.deb
 
 # === Install language servers ===
 
+sudo apt update
+
 # Ensure that all necessary package managers are installed
 sudo apt install -y python3-pip # pip3
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash # nvm
@@ -62,7 +64,7 @@ nvm install node # node and npm
 pip3 install -U python-lsp-server
 
 # C/C++
-sudo apt-get install -y clangd-12
+sudo apt install -y clangd-12
 sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 
 # Bash. Must install npm first
