@@ -15,6 +15,9 @@ autoload_src="${src_dir}/vim/autoload"
 mkdir -p ~/.vim/autoload
 cp -r ${autoload_src} ~/.vim/autoload
 
+# Install plugins
+vim +'PlugInstall --sync' +qa
+
 
 # === Installing packages ===
 
