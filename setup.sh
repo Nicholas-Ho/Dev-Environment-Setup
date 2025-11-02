@@ -51,7 +51,7 @@ trap cleanup EXIT
 function install_deb() {
     if [[ -n "${no_root}" ]] && [[ ${no_root} == 1 ]]; then
         dpkg -x $1 x_dir
-        cp "$(realpath "$(find x_dir -type d -name 'bin')")/*" ~/.local/bin
+        cp $(realpath "$(find x_dir -type d -name 'bin')")/* ~/.local/bin
     else
         sudo dpkg -i "$1"
     fi
