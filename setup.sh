@@ -18,7 +18,7 @@ done
 # === Vim setup ===
 
 # Setup symlink to .vimrc. Assumes .vimrc source is in a ./vim directory relative to this script.
-src_dir=$(dirname $(realpath "$0"))
+src_dir=$(dirname "$(realpath "$0")")
 vimrc_src="${src_dir}/vim/.vimrc"
 ln -s ${vimrc_src} ~/.vimrc
 
@@ -49,6 +49,7 @@ trap cleanup EXIT
 
 # Setup function to install .deb packages
 function install_deb() {
+    echo "${no_root}"
     if [[ -z ${no_root} ]] && [[ ${no_root} == 1 ]]; then
         dpkg -x $1 x_dir
         cp -r "$(realpath "$(find x_dir -type d -name 'bin')")" ~/.local/bin
