@@ -51,7 +51,7 @@ trap cleanup EXIT
 function install_deb() {
     if [[ -n "${no_root}" ]] && [[ ${no_root} == 1 ]]; then
         dpkg -x $1 x_dir
-        cp -r "$(realpath "$(find x_dir -type d -name 'bin')")/." /usr/bin
+        cp "$(realpath "$(find x_dir -type d -name 'bin')")/*" ~/.local/bin
     else
         sudo dpkg -i "$1"
     fi
@@ -85,10 +85,10 @@ install_deb code-minimap_0.6.8_amd64.deb
 
 # === Install language servers ===
 
-sudo apt update
+apt update
 
 # Ensure that all necessary package managers are installed
-sudo apt install -y python3-pip # pip3
+install_apt python3-pip # pip3
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -98,11 +98,11 @@ nvm install node # node and npm
 pip3 install -U python-lsp-server
 
 # C/C++
-sudo apt install -y clangd-12
+install_apt clangd-12
 sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 
 # Bash. Must install npm first
-sudo apt install shellcheck
+install_apt shellcheck
 npm install -g bash-language-server
 
 # Vim. Must install npm first
