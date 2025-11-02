@@ -90,4 +90,4 @@ shellrc_src="${src_dir}/bash/shellrc.sh"
 echo -e "\n# Personal shell setup\nsource ${shellrc_src}" >> ~/.bashrc
 
 # Prompt the user to run .bashrc for final setup
-echo "\n\n\n=== Setup complete! ===\nRestart the terminal or run the following command to start using\n\nsource ~/.bashrc
+echo -e "\n\n\n=== Setup complete! ===\nRestart the terminal or run the following command to start using\n\nsource ~/.bashrc"
