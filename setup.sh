@@ -57,6 +57,15 @@ function install_deb() {
     fi
 }
 
+function install_apt() {
+    if [[ -n "${no_root}" ]] && [[ ${no_root} == 1 ]]; then
+        apt-get download "$1"
+        install_deb "$(find $1*)"
+    else
+        sudo apt install -y "$1"
+    fi
+}
+
 # ripgrep
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep_14.1.1-1_amd64.deb
 install_deb ripgrep_14.1.1-1_amd64.deb
