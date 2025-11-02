@@ -59,6 +59,7 @@ Plug 'preservim/nerdtree'
 Plug 'wfxr/minimap.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'https://github.com/sheerun/vim-polyglot.git'
+Plug 'natebosch/vim-lsc'
 Plug 'wellle/context.vim'
 Plug 'arcticicestudio/nord-vim'
 call plug#end()
@@ -87,6 +88,30 @@ let g:fzf_colors = {
 \   'header':  ['fg', 'Comment']
 \ }
 let $BAT_THEME = 'Nord'
+
+" vim-lsc
+let g:lsc_server_commands = {
+\   'python': 'pylsp',
+\   'cpp': {
+\     'command': 'clangd --background-index',
+\     'suppress_stderr': v:true
+\   },
+\   'c': {
+\     'command': 'clangd --background-index',
+\     'suppress_stderr': v:true
+\   },
+\   'sh': 'bash-language-server start',
+\   'vim': {
+\     'name': 'vim-language-server',
+\     'command': 'vim-language-server --stdio',
+\     'message_hooks': {
+\       'initialize': {
+\         'initializationOptions': { 'vimruntime': $VIMRUNTIME, 'runtimepath': &rtp },
+\       },
+\     },
+\   },
+\   'yaml': 'yaml-language-server --stdio',
+\ }
 
 " lightline.vim
 set laststatus=2

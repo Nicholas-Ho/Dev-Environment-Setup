@@ -51,6 +51,35 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 curl -LO https://github.com/wfxr/code-minimap/releases/download/v0.6.8/code-minimap_0.6.8_amd64.deb
 sudo dpkg -i code-minimap_0.6.8_amd64.deb
 
+
+# === Install language servers ===
+
+sudo apt update
+
+# Ensure that all necessary package managers are installed
+sudo apt install -y python3-pip # pip3
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash # nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+nvm install node # node and npm
+
+# Python. Must install pip3 first
+pip3 install -U python-lsp-server
+
+# C/C++
+sudo apt install -y clangd-12
+sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
+
+# Bash. Must install npm first
+sudo apt install shellcheck
+npm install -g bash-language-server
+
+# Vim. Must install npm first
+npm install -g vim-language-server
+
+# YAML. Must install npm first
+npm install -g yaml-language-server
+
 cd ${og_dir}
 
 
@@ -59,3 +88,6 @@ cd ${og_dir}
 # Add to .bashrc. Assumes shellrc.sh source is in a ./bash directory relative to this script.Assumes .vimrc source is in a ./vim directory relative to this script.
 shellrc_src="${src_dir}/bash/shellrc.sh"
 echo -e "\n# Personal shell setup\nsource ${shellrc_src}" >> ~/.bashrc
+
+# Prompt the user to run .bashrc for final setup
+echo -e "\n\n\n=== Setup complete! ===\nRestart the terminal or run the following command to start using\n\nsource ~/.bashrc"

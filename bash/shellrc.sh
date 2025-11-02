@@ -2,13 +2,23 @@
 
 # === A setup script to be called in .bashrc or equivalent ===
 
+# Add ~/.local/bin to PATH (required for some user-level installations such as pylsp)
+usr_bin="$HOME/.local/bin"
+if [ -d "${usr_bin}" ] && [[ ":$PATH:" != *":${usr_bin}:"* ]]; then
+    PATH="${PATH:+"$PATH:"}${usr_bin}"
+fi
+
 # bat setup
 alias bat="batcat"
 
 # fzf setup
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash # Usually in .bashrc, moved here to keep fzf setup together
 export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
 complete -o bashdefault -o default -F _fzf_path_completion vim
+
+# Additional environment variables
+# export BASH_IDE_LOG_LEVEL=error # for bash-language-server
+export BACKGROUND_ANALYSIS_MAX_FILES=0 # for bash-language-server
 
 # Override prompt
 format_git_prompt() {
