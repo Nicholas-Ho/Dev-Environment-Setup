@@ -49,7 +49,7 @@ trap cleanup EXIT
 
 # Setup function to install .deb packages
 function install_deb() {
-    if [[ ! -z ${no_root} ]] && [[ ${no_root} == 1 ]]; then
+    if [[ -n "${no_root}" ]] && [[ ${no_root} == 1 ]]; then
         dpkg -x $1 x_dir
         cp -r "$(realpath "$(find x_dir -type d -name 'bin')")" ~/.local/bin
     else
