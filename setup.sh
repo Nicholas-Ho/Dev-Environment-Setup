@@ -3,6 +3,18 @@
 # Setup script for personal workspace on Ubuntu
 
 
+# Parse flags
+for opt in "$@"; do
+    case $opt in
+        --no-root) no_root=1 ;;
+        *)
+            echo "Unknown option: $opt"
+            exit 1
+            ;;
+    esac
+done
+
+
 # === Vim setup ===
 
 # Setup symlink to .vimrc. Assumes .vimrc source is in a ./vim directory relative to this script.
@@ -26,22 +38,32 @@ og_dir=$(pwd)
 # Make a temporary directory for installations
 tmp_dir=~/.tmpdir
 mkdir -p ${tmp_dir}
-cd ${tmp_dir}
+cd "${tmp_dir}"
 
 # Cleanup temporary directory on exit
 function cleanup {
-    cd ${og_dir}
+    cd "${og_dir}"
     rm -rf ${tmp_dir}
 }
 trap cleanup EXIT
 
+# Setup function to install .deb packages
+function install_deb() {
+    if [[ -z ${no_root} ]] && [[ ${no_root} == 1 ]]; then
+        dpkg -x $1 x_dir
+        cp -r "$(realpath "$(find x_dir -type d -name 'bin')")" ~/.local/bin
+    else
+        sudo dpkg -i $1
+    fi
+}
+
 # ripgrep
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep_14.1.1-1_amd64.deb
-sudo dpkg -i ripgrep_14.1.1-1_amd64.deb
+install_deb ripgrep_14.1.1-1_amd64.deb
 
 # bat
 curl -LO https://github.com/sharkdp/bat/releases/download/v0.26.0/bat_0.26.0_amd64.deb
-sudo dpkg -i bat_0.26.0_amd64.deb
+install_deb bat_0.26.0_amd64.deb
 
 # fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -49,7 +71,7 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 
 # code-minimap
 curl -LO https://github.com/wfxr/code-minimap/releases/download/v0.6.8/code-minimap_0.6.8_amd64.deb
-sudo dpkg -i code-minimap_0.6.8_amd64.deb
+install_deb code-minimap_0.6.8_amd64.deb
 
 
 # === Install language servers ===
@@ -80,7 +102,7 @@ npm install -g vim-language-server
 # YAML. Must install npm first
 npm install -g yaml-language-server
 
-cd ${og_dir}
+cd "${og_dir}"
 
 
 # === Shell setup ===
