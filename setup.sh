@@ -87,11 +87,22 @@ install_deb code-minimap_0.6.8_amd64.deb
 # === Install language servers ===
 
 # Ensure that all necessary package managers are installed
-sudo apt install -y python3-pip # pip3
+
+# pip3
+if [[ -n "${no_root}" ]] && [[ ${no_root} == 1 ]]; then
+    curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python3
+else
+    sudo apt install -y python3-pip 
+fi
+
+# node and npm (via nvm)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 nvm install node # node and npm
+
+
+# Install the language servers
 
 # Python. Must install pip3 first
 pip3 install -U python-lsp-server
