@@ -86,10 +86,8 @@ install_deb code-minimap_0.6.8_amd64.deb
 
 # === Install language servers ===
 
-apt update
-
 # Ensure that all necessary package managers are installed
-install_apt python3-pip # pip3
+sudo apt install -y python3-pip # pip3
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -99,11 +97,14 @@ nvm install node # node and npm
 pip3 install -U python-lsp-server
 
 # C/C++
-install_apt clangd-12
+install_apt unzip # first install unzip
+curl -LO https://github.com/clangd/clangd/releases/download/21.1.0/clangd-linux-21.1.0.zip
+unzip clangd-linux-21.1.0.zip
+install_deb clangd-linux-21.1.0
 sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 
 # Bash. Must install npm first
-install_apt shellcheck
+sudo apt install -y shellcheck
 npm install -g bash-language-server
 
 # Vim. Must install npm first
