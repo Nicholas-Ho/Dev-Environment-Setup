@@ -97,11 +97,16 @@ nvm install node # node and npm
 pip3 install -U python-lsp-server
 
 # C/C++
-install_apt unzip # first install unzip
-curl -LO https://github.com/clangd/clangd/releases/download/21.1.0/clangd-linux-21.1.0.zip
-unzip clangd-linux-21.1.0.zip
-install_deb clangd_21.1.0
-sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
+if [[ -n "${no_root}" ]] && [[ ${no_root} == 1 ]]; then
+    install_apt unzip # first install unzip
+    curl -LO https://github.com/clangd/clangd/releases/download/21.1.0/clangd-linux-21.1.0.zip
+    unzip clangd-linux-21.1.0.zip
+    mkdir -p ~/.local/bin
+    cp $(realpath "$(find clangd_21.1.0 -type d -name 'bin')")/* ~/.local/bin
+else
+    sudo apt install -y clangd-12 
+    sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
+fi
 
 # Bash. Must install npm first
 sudo apt install -y shellcheck
