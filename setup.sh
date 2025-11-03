@@ -100,7 +100,7 @@ pip3 install -U python-lsp-server
 install_apt unzip # first install unzip
 curl -LO https://github.com/clangd/clangd/releases/download/21.1.0/clangd-linux-21.1.0.zip
 unzip clangd-linux-21.1.0.zip
-install_deb clangd-linux-21.1.0
+install_deb clangd_21.1.0
 sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 
 # Bash. Must install npm first
