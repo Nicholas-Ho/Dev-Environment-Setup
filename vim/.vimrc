@@ -67,10 +67,10 @@ call plug#end()
 
 set termguicolors
 set background=dark
-" hi Normal guibg='#1A202C'
-" hi Normal guibg=NONE
 let g:everforest_background = 'hard'
 silent! colorscheme everforest
+hi Normal guibg=NONE
+" hi Normal guibg='#1A202C' " For Nord
 
 " fzf.vim
 set rtp+=~/.fzf
