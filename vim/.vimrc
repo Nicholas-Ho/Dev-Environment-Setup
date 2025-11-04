@@ -62,12 +62,15 @@ Plug 'https://github.com/sheerun/vim-polyglot.git'
 Plug 'natebosch/vim-lsc'
 Plug 'wellle/context.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'sainnhe/everforest'
 call plug#end()
 
-silent! colorscheme nord
 set termguicolors
+set background=dark
 " hi Normal guibg='#1A202C'
-hi Normal guibg=NONE
+" hi Normal guibg=NONE
+let g:everforest_background = 'hard'
+silent! colorscheme everforest
 
 " fzf.vim
 set rtp+=~/.fzf
@@ -87,7 +90,7 @@ let g:fzf_colors = {
 \   'spinner': ['fg', 'Label'],
 \   'header':  ['fg', 'Comment']
 \ }
-let $BAT_THEME = 'Nord'
+let $BAT_THEME = 'everforest-soft'
 
 " vim-lsc
 let g:lsc_server_commands = {
@@ -115,7 +118,7 @@ let g:lsc_server_commands = {
 
 " lightline.vim
 set laststatus=2
-let g:lightline = { 'colorscheme': 'nord' }
+let g:lightline = { 'colorscheme': 'everforest' }
 let g:lightline.active = {
 \ 'left': [ [ 'mode', 'paste' ],
 \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
