@@ -10,10 +10,10 @@ src_dir=$(dirname $(realpath "$0"))
 vimrc_src="${src_dir}/vim/.vimrc"
 ln -s ${vimrc_src} ~/.vimrc
 
-# Copy autoload files to ~/.vim/autoload
-autoload_src="${src_dir}/vim/autoload"
-mkdir -p ~/.vim/autoload
-cp -r ${autoload_src} ~/.vim/autoload
+# Copy plugin files to ~/.vim/plugin
+plugin_src="${src_dir}/vim/plugin"
+mkdir -p ~/.vim/plugin
+cp -r ${plugin_src} ~/.vim/plugin
 
 # Install plugins
 vim -E -s -u ~/.vimrc +'PlugInstall --sync' +qa
