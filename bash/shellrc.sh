@@ -8,9 +8,6 @@ if [ -d "${usr_bin}" ] && [[ ":$PATH:" != *":${usr_bin}:"* ]]; then
     PATH="${PATH:+"$PATH:"}${usr_bin}"
 fi
 
-# bat setup
-alias bat="batcat"
-
 # fzf setup
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash # Usually in .bashrc, moved here to keep fzf setup together
 export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
