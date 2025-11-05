@@ -83,6 +83,15 @@ npm install -g yaml-language-server
 cd ${og_dir}
 
 
+# === Additional setup ===
+
+# bat. Load themes into cache
+mkdir -p "$(bat --config-dir)/themes"
+cd "$(bat --config-dir)/themes"
+cp $src_dir/bat/themes/* "$(bat --config-dir)/themes"
+bat cache --build
+
+
 # === Shell setup ===
 
 # Add to .bashrc. Assumes shellrc.sh source is in a ./bash directory relative to this script.Assumes .vimrc source is in a ./vim directory relative to this script.
