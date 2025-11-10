@@ -103,6 +103,7 @@ let g:lsc_server_commands = {
 \     'command': 'clangd --background-index',
 \     'suppress_stderr': v:true
 \   },
+\   'haskell': 'haskell-language-server-wrapper --lsp',
 \   'sh': 'bash-language-server start',
 \   'vim': {
 \     'name': 'vim-language-server',
