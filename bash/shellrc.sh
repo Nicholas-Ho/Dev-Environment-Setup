@@ -13,6 +13,9 @@ fi
 export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
 complete -o bashdefault -o default -F _fzf_path_completion vim
 
+# ghcup setup
+[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
+
 # Additional environment variables
 # export BASH_IDE_LOG_LEVEL=error # for bash-language-server
 export BACKGROUND_ANALYSIS_MAX_FILES=0 # for bash-language-server
