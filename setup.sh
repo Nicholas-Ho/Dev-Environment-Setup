@@ -55,7 +55,7 @@ sudo dpkg -i code-minimap_0.6.8_amd64.deb
 # === Install compilers and build tools ===
 
 # gcc (C/C++)
-sudo apt install -y gcc
+sudo apt install gcc
 
 # Haskell (ghcup)
 sudo apt install -y build-essential curl libffi-dev libffi8ubuntu1 libgmp-dev libgmp10 libncurses-dev libncurses5 libtinfo5
