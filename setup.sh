@@ -80,6 +80,8 @@ npm install -g vim-language-server
 # YAML. Must install npm first
 npm install -g yaml-language-server
 
+# Haskell language server is bundled in its installation and should be installed when required
+
 cd ${og_dir}
 
 
