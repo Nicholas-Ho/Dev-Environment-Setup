@@ -18,6 +18,7 @@ set number
 set relativenumber
 
 set cursorline
+set cursorcolumn
 
 " === Settings ===
 
