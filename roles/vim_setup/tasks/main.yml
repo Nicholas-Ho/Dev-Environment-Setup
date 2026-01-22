@@ -1,13 +1,13 @@
 - name: Create symbolic link to .vimrc
   ansible.builtin.file:
     src: .vimrc
-    dest: ~/.vimrc
+    dest: "{{ ansible_user_dir }}/.vimrc"
     state: link
 
 - name: Copy plugin files
   ansible.builtin.copy:
     src: plugin/
-    dest: ~/.vim/plugin/
+    dest: "{{ ansible_user_dir }}/.vim/plugin/"
 
 - name: Install vim
   ansible.builtin.apt:
@@ -15,4 +15,4 @@
 
 - name: Install plugins
   ansible.builtin.shell:
-    cmd: vim -E -s -u ~/.vimrc +'PlugInstall --sync' +qa
+    cmd: "vim -E -s -u {{ ansible_user_dir }}/.vimrc +'PlugInstall --sync' +qa"
