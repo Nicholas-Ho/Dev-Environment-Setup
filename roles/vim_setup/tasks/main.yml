@@ -4,14 +4,25 @@
     dest: "{{ ansible_user_dir }}/.vimrc"
     state: link
 
+- name: Install vim
+  ansible.builtin.apt:
+    name: vim
+
+- name: Ensure .vim directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir}}/.vim"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
 - name: Copy plugin files
   ansible.builtin.copy:
     src: plugin/
     dest: "{{ ansible_user_dir }}/.vim/plugin/"
-
-- name: Install vim
-  ansible.builtin.apt:
-    name: vim
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
 
 - name: Install plugins
   ansible.builtin.shell:
