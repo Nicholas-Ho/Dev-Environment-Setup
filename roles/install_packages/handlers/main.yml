@@ -1,4 +1,0 @@
-- name: Delete temporary downloads directory
-  ansible.builtin.file:
-    path: "{{ tempdir.path }}"
-    state: absent
