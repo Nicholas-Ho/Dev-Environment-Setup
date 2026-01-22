@@ -1,0 +1,29 @@
+- name: Install packages block
+  block:
+    - name: Create temporary downloads directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: downloads
+      register: tempdir
+
+    - name: Determine ripgrep artifact name
+      ansible.builtin.set_fact:
+        rg_artifact_name: >-
+          {% if target_arch == 'amd64' %}
+          ripgrep_{{ rg_pkg_version }}-1_amd64.deb
+          {% elif target_arch == 'arm64' %}
+          ripgrep-{{ rg_pkg_version }}-aarch64-unknown-linux-gnu.tar.gz
+          {% endif %}
+
+    - name: Download ripgrep package
+      ansible.builtin.include_tasks: install_from_curl.yml
+      vars:
+        source_base_url: "https://github.com/BurntSushi/ripgrep/releases/download/{{ rg_pkg_version }}"
+        artifact_name: "{{ rg_artifact_name }}"
+        binary_name: rg
+
+  always:
+    - name: Delete temporary downloads directory
+      ansible.builtin.file:
+        path: "{{ tempdir.path }}"
+        state: absent

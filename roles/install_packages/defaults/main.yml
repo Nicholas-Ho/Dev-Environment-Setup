@@ -1,0 +1,3 @@
+target_arch: amd64
+rg_pkg_version: '15.0.1'
+bat_pkg_version: '0.26.1'
