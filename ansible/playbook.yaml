@@ -1,5 +1,5 @@
 - name: Set up development environment
-  hosts: localhost
+  hosts: dev_hosts
   tasks:
     - name: Setup vim
       include_role:
