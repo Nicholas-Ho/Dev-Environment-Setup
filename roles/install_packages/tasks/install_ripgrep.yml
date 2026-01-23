@@ -22,6 +22,7 @@
 - name: Install deb package
   ansible.builtin.apt:
     deb: "{{ tempdir.path }}/{{ artifact_name }}"
+  become: true
   when: target_arch == 'amd64'
 
   # Install for ARM64 (.tar.gz)

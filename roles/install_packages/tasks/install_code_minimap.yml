@@ -13,3 +13,4 @@
 - name: Install deb package
   ansible.builtin.apt:
     deb: "{{ tempdir.path }}/{{ artifact_name }}"
+  become: true

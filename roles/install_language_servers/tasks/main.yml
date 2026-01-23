@@ -2,6 +2,7 @@
   ansible.builtin.apt:
     name: python3-pip
     update_cache: true
+  become: true
 
 - name: Install Node.JS via NVM and get npm executable path
   ansible.builtin.include_tasks: install_node.yml
@@ -14,6 +15,7 @@
 - name: Install clangd (C/C++ language server)
   ansible.builtin.apt:
     name: clangd-12
+  become: true
 
 - name: Register clangd-12 as an alternative
   ansible.builtin.alternatives:
@@ -22,10 +24,12 @@
     link: /usr/bin/clangd
     priority: 100
     state: present
+  become: true
 
 - name: Install shellcheck (bash linter)
   ansible.builtin.apt:
     name: shellcheck
+  become: true
 
 - name: Install Node-based language servers
   community.general.npm:
@@ -36,5 +40,3 @@
     - bash-language-server
     - vim-language-server
     - yaml-language-server
-  become_user: "{{ ansible_user }}"
-
