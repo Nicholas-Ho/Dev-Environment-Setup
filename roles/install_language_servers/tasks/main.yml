@@ -10,7 +10,7 @@
 - name: Install Python language server
   ansible.builtin.pip:
     name: python-lsp-server
-    executable: /usr/bin/python3 -m pip
+    executable: /usr/bin/pip3
 
 - name: Install clangd (C/C++ language server)
   ansible.builtin.apt:
