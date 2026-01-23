@@ -1,6 +1,9 @@
-- name: Define nvm.sh path for convenience
+- name: define nvm dir for convenience
   ansible.builtin.set_fact:
     nvm_dir: "{{ ansible_user_dir }}/.nvm"
+
+- name: define nvm script path for convenience
+  ansible.builtin.set_fact:
     nvm_script_path: "{{ nvm_dir }}/nvm.sh"
 
 - name: Install NVM block
@@ -34,4 +37,4 @@
 - name: Define npm executable path for NVM
   ansible.builtin.set_fact:
     nvm_node_version: "{{ lookup('pipe', 'bash -c \"source ' ~ nvm_script_path ~ ' && nvm version\"') }}"
-    nvm_executable: "{{ nvm_dir }}/versions/node/{{ nvm_node_version }}/bin/npm"
+    npm_executable: "{{ nvm_dir }}/versions/node/{{ nvm_node_version }}/bin/npm"

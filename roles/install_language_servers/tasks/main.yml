@@ -35,7 +35,7 @@
   community.general.npm:
     name: "{{ item }}"
     global: yes
-    executable: "{{ nvm_executable }}"
+    executable: "{{ npm_executable }}"
   loop:
     - bash-language-server
     - vim-language-server
