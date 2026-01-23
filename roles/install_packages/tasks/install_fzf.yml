@@ -7,4 +7,3 @@
 - name: Install fzf using script
   ansible.builtin.shell:
     cmd: "{{ ansible_user_dir }}/.fzf/install --key-bindings --completion --no-update-rc"
-  become_user: "{{ ansible_user | default(ansible_env.USER) }}"
