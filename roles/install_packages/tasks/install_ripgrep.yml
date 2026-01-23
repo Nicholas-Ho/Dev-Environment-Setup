@@ -37,3 +37,5 @@
     src: "{{tempdir.path }}/{{ artifact_name | regex_replace('\\.tar\\.gz$', '') }}/{{ binary_name }}"
     dest: "/usr/local/bin/{{ binary_name }}"
     mode: '0755'
+    remote_src: true
+  when: target_arch == 'arm64'
