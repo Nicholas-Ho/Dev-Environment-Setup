@@ -1,9 +1,9 @@
 - name: Determine ripgrep artifact name
   ansible.builtin.set_fact:
     artifact_name: >-
-      {% if target_arch == 'amd64' %}
+      {% if target_arch == 'amd64' -%}
       ripgrep_{{ pkg_version }}-1_amd64.deb
-      {% elif target_arch == 'arm64' %}
+      {% elif target_arch == 'arm64' -%}
       ripgrep-{{ pkg_version }}-aarch64-unknown-linux-gnu.tar.gz
       {% endif %}
 
