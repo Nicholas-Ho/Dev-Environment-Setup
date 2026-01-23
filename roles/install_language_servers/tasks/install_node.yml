@@ -36,5 +36,4 @@
 
 - name: Define npm executable path for NVM
   ansible.builtin.set_fact:
-    nvm_node_version: "{{ lookup('pipe', 'bash -c \"source ' ~ nvm_script_path ~ ' && nvm version\"') }}"
-    npm_executable: "{{ nvm_dir }}/versions/node/{{ nvm_node_version }}/bin/npm"
+    npm_executable: "{{ nvm_dir }}/versions/node/{{ lookup('pipe', 'bash -c \"source ' ~ nvm_script_path ~ ' && nvm version\"') }}/bin/npm"
