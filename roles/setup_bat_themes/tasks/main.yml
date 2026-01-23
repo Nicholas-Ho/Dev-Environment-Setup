@@ -1,0 +1,23 @@
+- name: Get bat config directory
+  ansible.builtin.set_fact:
+    bat_config_dir: "{{ lookup('pipe', 'bat --config-dir') }}"
+
+- name: Ensure themes directory exists
+  ansible.builtin.file:
+    name: "{{ bat_config_dir }}/themes"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Copy bat theme files
+  ansible.builtin.copy:
+    src: themes/
+    dest: "{{ bat_config_dir }}/themes/"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+
+- name: Rebuild bat cache
+  ansible.builtin.command: bat cache --build
+  changed_when: false

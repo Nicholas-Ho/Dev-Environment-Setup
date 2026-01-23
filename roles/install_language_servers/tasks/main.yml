@@ -1,0 +1,42 @@
+- name: Ensure Python pip3 is installed
+  ansible.builtin.apt:
+    name: python3-pip
+    update_cache: true
+  become: true
+
+- name: Install Node.JS via NVM and get npm executable path
+  ansible.builtin.include_tasks: install_node.yml
+
+- name: Install Python language server
+  ansible.builtin.pip:
+    name: python-lsp-server
+    executable: /usr/bin/pip3
+
+- name: Install clangd (C/C++ language server)
+  ansible.builtin.apt:
+    name: clangd-12
+  become: true
+
+- name: Register clangd-12 as an alternative
+  ansible.builtin.alternatives:
+    name: clangd
+    path: /usr/bin/clangd-12
+    link: /usr/bin/clangd
+    priority: 100
+    state: present
+  become: true
+
+- name: Install shellcheck (bash linter)
+  ansible.builtin.apt:
+    name: shellcheck
+  become: true
+
+- name: Install Node-based language servers
+  ansible.builtin.shell:
+    cmd: "source {{ nvm_script_path }} && npm install -g {{ item }}"
+  loop:
+    - bash-language-server
+    - vim-language-server
+    - yaml-language-server
+  args:
+    executable: /bin/bash

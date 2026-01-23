@@ -1,0 +1,31 @@
+- name: Install packages block
+  block:
+    - name: Create temporary downloads directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: downloads
+      register: tempdir
+
+    - name: Install ripgrep
+      ansible.builtin.include_tasks: install_ripgrep.yml
+      vars:
+        pkg_version: "{{ rg_version }}"
+
+    - name: Install bat
+      ansible.builtin.include_tasks: install_bat.yml
+      vars:
+        pkg_version: "{{ bat_version }}"
+
+    - name: Install fzf
+      ansible.builtin.include_tasks: install_fzf.yml
+
+    - name: Install code minimap
+      ansible.builtin.include_tasks: install_code_minimap.yml
+      vars:
+        pkg_version: "{{ code_minimap_version }}"
+
+  always:
+    - name: Delete temporary downloads directory
+      ansible.builtin.file:
+        path: "{{ tempdir.path }}"
+        state: absent

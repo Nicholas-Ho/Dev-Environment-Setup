@@ -1,0 +1,4 @@
+target_arch: amd64
+rg_version: '15.1.0'
+bat_version: '0.26.1'
+code_minimap_version: '0.6.8'

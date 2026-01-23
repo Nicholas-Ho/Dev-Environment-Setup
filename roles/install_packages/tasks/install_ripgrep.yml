@@ -1,0 +1,42 @@
+- name: Determine ripgrep artifact name
+  ansible.builtin.set_fact:
+    artifact_name: >-
+      {%- if target_arch == 'amd64' -%}
+      ripgrep_{{ pkg_version }}-1_amd64.deb
+      {%- elif target_arch == 'arm64' -%}
+      ripgrep-{{ pkg_version }}-aarch64-unknown-linux-gnu.tar.gz
+      {%- endif -%}
+
+- name: Set other variables
+  ansible.builtin.set_fact:
+    source_base_url: "https://github.com/BurntSushi/ripgrep/releases/download/{{ pkg_version }}"
+    binary_name: rg
+
+- name: Download artifact
+  ansible.builtin.get_url:
+    url: "{{ source_base_url }}/{{ artifact_name }}"
+    dest: "{{ tempdir.path }}/{{ artifact_name }}"
+    mode: '0644'
+
+  # Install for AMD64 (.deb)
+- name: Install deb package
+  ansible.builtin.apt:
+    deb: "{{ tempdir.path }}/{{ artifact_name }}"
+  become: true
+  when: target_arch == 'amd64'
+
+  # Install for ARM64 (.tar.gz)
+- name: Extract tarball
+  ansible.builtin.unarchive:
+    src: "{{ tempdir.path }}/{{ artifact_name }}"
+    dest: "{{tempdir.path }}"
+    remote_src: true
+  when: target_arch == 'arm64'
+
+- name: Copy binary to bin
+  ansible.builtin.copy:
+    src: "{{tempdir.path }}/{{ artifact_name | regex_replace('\\.tar\\.gz$', '') }}/{{ binary_name }}"
+    dest: "/usr/local/bin/{{ binary_name }}"
+    mode: '0755'
+    remote_src: true
+  when: target_arch == 'arm64'

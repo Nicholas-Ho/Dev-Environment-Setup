@@ -1,0 +1,31 @@
+- name: Define nvm script path for convenience
+  ansible.builtin.set_fact:
+    nvm_script_path: "{{ ansible_user_dir }}/.nvm/nvm.sh"
+
+- name: Install NVM block
+  block:
+    - name: Create temporary downloads directory
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: downloads
+      register: tempdir
+
+    - name: Install NVM
+      ansible.builtin.shell:
+        cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh | bash
+      args:
+        chdir: "{{ tempdir.path }}"
+        creates: "{{ nvm_script_path }}"
+
+  always:
+    - name: Delete temporary downloads directory
+      ansible.builtin.file:
+        path: "{{ tempdir.path }}"
+        state: absent
+
+- name: Install Node.JS
+  ansible.builtin.shell:
+    cmd: "source {{ nvm_script_path }} && nvm install node"
+  args:
+    executable: /bin/bash
+    creates: "{{ ansible_user_dir }}/.nvm/versions/node"
