@@ -10,4 +10,4 @@ source venv/bin/activate
 
 python3 -m pip install --upgrade pip
 python3 -m pip install ansible
-ansible-playbook -i inventory.ini playbook.yaml
+ansible-playbook -i inventory.ini playbook.yaml -K -u "$(whoami)"
