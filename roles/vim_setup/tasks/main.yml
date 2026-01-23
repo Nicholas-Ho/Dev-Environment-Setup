@@ -1,8 +1,10 @@
-- name: Create symbolic link to .vimrc
-  ansible.builtin.file:
+- name: Copy .vimrc
+  ansible.builtin.copy:
     src: .vimrc
     dest: "{{ ansible_user_dir }}/.vimrc"
-    state: link
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
 
 - name: Install vim
   ansible.builtin.apt:
