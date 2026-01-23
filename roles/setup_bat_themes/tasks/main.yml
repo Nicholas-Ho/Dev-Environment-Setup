@@ -6,16 +6,16 @@
   ansible.builtin.file:
     name: "{{ bat_config_dir }}/themes"
     state: directory
-    owner: "{{ ansible_user | default(ansible_env.USER) }}"
-    group: "{{ ansible_user | default(ansible_env.USER) }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: '0755'
 
 - name: Copy bat theme files
   ansible.builtin.copy:
     src: themes/
     dest: "{{ bat_config_dir }}/themes/"
-    owner: "{{ ansible_user | default(ansible_env.USER) }}"
-    group: "{{ ansible_user | default(ansible_env.USER) }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: '0644'
 
 - name: Rebuild bat cache

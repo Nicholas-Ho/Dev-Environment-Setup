@@ -14,7 +14,7 @@
     - name: Install NVM
       ansible.builtin.shell:
         cmd: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh | bash
-      become: "{{ ansible_user | default(ansible_env.USER) }}"
+      become: "{{ ansible_user }}"
       args:
         chdir: "{{ tempdir.path }}"
         creates: "{{ nvm_script_path }}"
@@ -28,7 +28,7 @@
 - name: Install Node.JS
   ansible.builtin.shell:
     cmd: "source {{ nvm_script_path }} && nvm install node"
-  become_user: "{{ ansible_user | default(ansible_env.USER) }}"
+  become_user: "{{ ansible_user }}"
   args:
     executable: /bin/bash
     creates: "{{ ansible_user_dir }}/.nvm/versions/node"

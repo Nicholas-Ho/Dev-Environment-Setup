@@ -36,5 +36,5 @@
     - bash-language-server
     - vim-language-server
     - yaml-language-server
-  become_user: "{{ ansible_user | default(ansible_env.USER) }}"
+  become_user: "{{ ansible_user }}"
 

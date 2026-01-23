@@ -2,8 +2,8 @@
   ansible.builtin.copy:
     src: .vimrc
     dest: "{{ ansible_user_dir }}/.vimrc"
-    owner: "{{ ansible_user | default(ansible_env.USER) }}"
-    group: "{{ ansible_user | default(ansible_env.USER) }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: '0644'
 
 - name: Install vim
@@ -14,16 +14,16 @@
   ansible.builtin.file:
     path: "{{ ansible_user_dir}}/.vim"
     state: directory
-    owner: "{{ ansible_user | default(ansible_env.USER) }}"
-    group: "{{ ansible_user | default(ansible_env.USER) }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: '0755'
 
 - name: Copy plugin files
   ansible.builtin.copy:
     src: plugin/
     dest: "{{ ansible_user_dir }}/.vim/plugin/"
-    owner: "{{ ansible_user | default(ansible_env.USER) }}"
-    group: "{{ ansible_user | default(ansible_env.USER) }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: '0755'
 
 - name: Install plugins
