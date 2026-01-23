@@ -39,4 +39,5 @@
     dest: "/usr/local/bin/{{ binary_name }}"
     mode: '0755'
     remote_src: true
+  become: true
   when: target_arch == 'arm64'
