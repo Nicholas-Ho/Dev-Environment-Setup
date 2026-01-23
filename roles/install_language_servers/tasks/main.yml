@@ -32,11 +32,11 @@
   become: true
 
 - name: Install Node-based language servers
-  community.general.npm:
-    name: "{{ item }}"
-    global: yes
-    executable: "{{ npm_executable }}"
+  ansible.builtin.shell:
+    cmd: "source {{ nvm_script_path }} && npm install -g {{ item }}"
   loop:
     - bash-language-server
     - vim-language-server
     - yaml-language-server
+  args:
+    executable: /bin/bash
