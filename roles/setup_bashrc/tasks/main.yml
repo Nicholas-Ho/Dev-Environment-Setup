@@ -1,0 +1,23 @@
+- name: Define .shellrc destination
+  ansible.builtin.set_fact:
+    shellrc_dest: "{{ ansible_user_dir }}/.usr-setup/.shellrc"
+
+- name: Copy .shellrc
+  ansible.builtin.copy:
+    src: .shellrc
+    dest: "{{ shellrc_dest }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+
+- name: Ensure .shellrc is sourced in .bashrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    block: |
+      # Personal shell setup
+      source {{ shellrc_dest }}
+    marker: ""  # disables the default BEGIN/END comments
+    create: yes
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
