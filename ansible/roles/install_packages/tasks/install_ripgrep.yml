@@ -17,6 +17,7 @@
     url: "{{ source_base_url }}/{{ artifact_name }}"
     dest: "{{ tempdir.path }}/{{ artifact_name }}"
     mode: '0644'
+  changed_when: false
 
   # Install for AMD64 (.deb)
 - name: Install deb package
