@@ -5,6 +5,7 @@
         state: directory
         suffix: downloads
       register: tempdir
+      changed_when: false
 
     - name: Install ripgrep
       ansible.builtin.include_tasks: install_ripgrep.yml
@@ -29,3 +30,4 @@
       ansible.builtin.file:
         path: "{{ tempdir.path }}"
         state: absent
+      changed_when: false

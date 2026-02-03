@@ -9,6 +9,7 @@
     url: "{{ source_base_url }}/{{ artifact_name }}"
     dest: "{{ tempdir.path }}/{{ artifact_name }}"
     mode: '0644'
+  changed_when: false
 
 - name: Install deb package
   ansible.builtin.apt:
