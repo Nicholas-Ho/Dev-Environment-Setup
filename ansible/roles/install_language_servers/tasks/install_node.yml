@@ -1,6 +1,15 @@
+- name: Determine NVM_DIR
+  ansible.builtin.set_fact:
+    nvm_dir: >-
+      {{
+        (ansible_env.XDG_CONFIG_HOME ~ '/nvm')
+        if (ansible_env.XDG_CONFIG_HOME is defined)
+        else (ansible_user_dir ~ '/.nvm')
+      }}
+
 - name: Define nvm script path for convenience
   ansible.builtin.set_fact:
-    nvm_script_path: "{{ ansible_user_dir }}/.nvm/nvm.sh"
+    nvm_script_path: "{{ nvm_dir }}/nvm.sh"
 
 - name: Install NVM block
   block:
