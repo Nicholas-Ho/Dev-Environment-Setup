@@ -13,24 +13,44 @@
 #     name: python-lsp-server
 #     executable: /usr/bin/pip3
 
-- name: Install clangd (C/C++ language server)
-  ansible.builtin.apt:
-    name: "clangd-{{ clangd_version }}"
-  become: true
+  ## Debian-based
+- block:
+  - name: Install clangd (apt)
+    ansible.builtin.apt:
+      name: "clangd-{{ clangd_version }}"
+    become: true
 
-- name: Register clangd as an alternative
-  ansible.builtin.alternatives:
-    name: clangd
-    path: "/usr/bin/clangd-{{ clangd_version }}"
-    link: /usr/bin/clangd
-    priority: 100
-    state: present
-  become: true
+  - name: Register clangd as an alternative
+    ansible.builtin.alternatives:
+      name: clangd
+      path: "/usr/bin/clangd-{{ clangd_version }}"
+      link: /usr/bin/clangd
+      priority: 100
+      state: present
+    become: true
 
-- name: Install shellcheck (bash linter)
-  ansible.builtin.apt:
-    name: shellcheck
-  become: true
+  - name: Install shellcheck (apt)
+    ansible.builtin.apt:
+      name: shellcheck
+    become: true
+
+  when: ansible_facts['os_family'] == "Debian"
+
+  ## Arch
+- block:
+  - name: Install clang (pacman)
+    community.general.pacman:
+      name: clang
+      update_cache: true
+    become: true
+
+  - name: Install shellcheck (pacman)
+    community.general.pacman:
+      name: shellcheck
+      update_cache: true
+    become: true
+
+  when: ansible_facts['os_family'] == "Archlinux"
 
 - name: Install Node-based language servers
   ansible.builtin.shell:

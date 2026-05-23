@@ -1,17 +1,29 @@
-  # artifact_name valid for amd64 and arm64
-- name: Set variables
-  ansible.builtin.set_fact:
-    artifact_name: "bat_{{ pkg_version }}_{{ target_arch }}.deb"
-    source_base_url: "https://github.com/sharkdp/bat/releases/download/v{{ pkg_version }}"
+  ## Debian-based
+- block:
+    # artifact_name valid for amd64 and arm64
+  - name: Set variables
+    ansible.builtin.set_fact:
+      artifact_name: "bat_{{ pkg_version }}_{{ target_arch }}.deb"
+      source_base_url: "https://github.com/sharkdp/bat/releases/download/v{{ pkg_version }}"
 
-- name: Download artifact
-  ansible.builtin.get_url:
-    url: "{{ source_base_url }}/{{ artifact_name }}"
-    dest: "{{ tempdir.path }}/{{ artifact_name }}"
-    mode: '0644'
-  changed_when: false
+  - name: Download artifact
+    ansible.builtin.get_url:
+      url: "{{ source_base_url }}/{{ artifact_name }}"
+      dest: "{{ tempdir.path }}/{{ artifact_name }}"
+      mode: '0644'
+    changed_when: false
 
-- name: Install deb package
-  ansible.builtin.apt:
-    deb: "{{ tempdir.path }}/{{ artifact_name }}"
+  - name: Install deb package
+    ansible.builtin.apt:
+      deb: "{{ tempdir.path }}/{{ artifact_name }}"
+    become: true
+
+  when: ansible_facts['os_family'] == "Debian"
+
+  ## Arch
+- name: Install bat (pacman)
+  community.general.pacman:
+    name: bat
+    update_cache: true
+  when: ansible_facts['os_family'] == "Archlinux"
   become: true
