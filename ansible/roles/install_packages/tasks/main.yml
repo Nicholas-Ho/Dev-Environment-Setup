@@ -7,6 +7,8 @@
       register: tempdir
       changed_when: false
 
+    # NOTE: Package versions not used for Arch
+
     - name: Install ripgrep
       ansible.builtin.include_tasks: install_ripgrep.yml
       vars:
@@ -19,11 +21,6 @@
 
     - name: Install fzf
       ansible.builtin.include_tasks: install_fzf.yml
-
-    - name: Install code minimap
-      ansible.builtin.include_tasks: install_code_minimap.yml
-      vars:
-        pkg_version: "{{ code_minimap_version }}"
 
   always:
     - name: Delete temporary downloads directory
