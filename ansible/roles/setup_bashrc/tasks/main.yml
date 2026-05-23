@@ -24,7 +24,7 @@
     block: |
       # Personal shell setup
       source {{ shellrc_dest }}/.shellrc
-    marker: "## {mark} added by Ansible"
+    marker: "## {mark} Shell setup added by Ansible"
     create: yes
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
