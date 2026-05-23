@@ -9,7 +9,7 @@ if [ -d "${usr_bin}" ] && [[ ":$PATH:" != *":${usr_bin}:"* ]]; then
 fi
 
 # fzf setup
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash # Usually in .bashrc, moved here to keep fzf setup together
+eval "$(fzf --bash)" # Usually in .bashrc, moved here to keep fzf setup together
 export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
 complete -o bashdefault -o default -F _fzf_path_completion vim
 
