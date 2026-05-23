@@ -61,15 +61,18 @@ Plug 'itchyny/lightline.vim'
 Plug 'https://github.com/sheerun/vim-polyglot.git'
 Plug 'natebosch/vim-lsc'
 Plug 'wellle/context.vim'
-Plug 'arcticicestudio/nord-vim'
-Plug 'sainnhe/everforest'
+" Plug 'arcticicestudio/nord-vim'
+" Plug 'sainnhe/everforest'
+Plug 'ghifarit53/tokyonight-vim'
 call plug#end()
 
 set termguicolors
-set background=dark
-let g:everforest_background = 'hard'
-silent! colorscheme everforest
-hi Normal guibg=NONE
+" set background=dark
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
+silent! colorscheme tokyonight
+" hi Normal guibg=NONE " For WSL2
+" let g:everforest_background = 'hard' " For Everforest
 " hi Normal guibg='#1A202C' " For Nord
 
 " fzf.vim
@@ -90,7 +93,7 @@ let g:fzf_colors = {
 \   'spinner': ['fg', 'Label'],
 \   'header':  ['fg', 'Comment']
 \ }
-let $BAT_THEME = 'everforest-soft'
+let $BAT_THEME = 'tokyonight-night'
 
 " vim-lsc
 let g:lsc_server_commands = {
@@ -118,7 +121,7 @@ let g:lsc_server_commands = {
 
 " lightline.vim
 set laststatus=2
-let g:lightline = { 'colorscheme': 'everforest' }
+let g:lightline = { 'colorscheme': 'tokyonight' }
 let g:lightline.active = {
 \ 'left': [ [ 'mode', 'paste' ],
 \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
