@@ -40,15 +40,15 @@ format_git_prompt() {
         # Error handling to handle no upstream
         if count="$(git rev-list "$git_curr_branch" --not "origin/$git_curr_branch" --count 2>/dev/null)"; then
             git_ahead_count="$count"
-            if [[ "$count" -ne 0 ]]; then ahead_colour="\e[32m"; fi
+            if [[ "$count" -ne 0 ]]; then ahead_colour="\e[01;32m"; fi
         fi
         if count="$(git rev-list "origin/$git_curr_branch" --not "$git_curr_branch" --count 2>/dev/null)"; then
             git_behind_count="$count"
-            if [[ "$count" -ne 0 ]]; then behind_colour="\e[31m"; fi
+            if [[ "$count" -ne 0 ]]; then behind_colour="\e[01;31m"; fi
         fi
 
         echo -e "\e[33m $git_curr_branch $modified_colour󰓦 $git_modified_count $ahead_colour $git_ahead_count $behind_colour $git_behind_count "
     fi
 }
 PROMPT_COMMAND='GIT_PROMPT=$(format_git_prompt)'
-PS1='\[\e[32m\]\A \[\e[36m\]\w\[\e[0m\] ${GIT_PROMPT}\[\e[0m\]\n󰘍 \$ '
+PS1='\[\e[37m\]\A \[\e[35m\]\w\[\e[0m\] ${GIT_PROMPT}\n\[\e[35m\]󰘍 \$ \[\e[0m\]'
