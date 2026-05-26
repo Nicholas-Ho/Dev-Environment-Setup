@@ -22,22 +22,33 @@ source /usr/share/git/completion/git-completion.bash
 
 # Override prompt
 format_git_prompt() {
-    git_curr_branch=$(git branch --show-current 2>/dev/null)
-    git_modified_count='-'
-    git_ahead_count='-'
-    git_behind_count='-'
-    if [[ ${git_curr_branch} == "" ]]; then
-        git_curr_branch="none"
-    else
+    if git_curr_branch=$(git branch --show-current 2>/dev/null) && [[ -n "$git_curr_branch" ]]; then
+        git_ahead_count='-'
+        git_behind_count='-'
+
+        default_colour="\e[01;37m"
+        modified_colour="$default_colour"
+        ahead_colour="$default_colour"
+        behind_colour="$default_colour"
+
         git fetch > /dev/null 2>&1 &
         git_modified_tracked_count=$(git status -s -uno | wc -l)
         git_untracked_count=$(git ls-files --others --exclude-standard | wc -l)
-        git_modified_count=$((${git_modified_tracked_count}+${git_untracked_count}))
+        git_modified_count="$((${git_modified_tracked_count}+${git_untracked_count}))"
+        if [[ "$git_modified_count" -ne 0 ]]; then modified_colour="\e[01;34m"; fi
+
         # Error handling to handle no upstream
-        git_ahead_count=$(git rev-list ${git_curr_branch} --not origin/${git_curr_branch} --count 2>/dev/null || echo '-')
-        git_behind_count=$(git rev-list origin/${git_curr_branch} --not ${git_curr_branch} --count 2>/dev/null || echo '-')
+        if count="$(git rev-list "$git_curr_branch" --not "origin/$git_curr_branch" --count 2>/dev/null)"; then
+            git_ahead_count="$count"
+            if [[ "$count" -ne 0 ]]; then ahead_colour="\e[32m"; fi
+        fi
+        if count="$(git rev-list "origin/$git_curr_branch" --not "$git_curr_branch" --count 2>/dev/null)"; then
+            git_behind_count="$count"
+            if [[ "$count" -ne 0 ]]; then behind_colour="\e[31m"; fi
+        fi
+
+        echo -e "\e[33m $git_curr_branch $modified_colour󰓦 $git_modified_count $ahead_colour $git_ahead_count $behind_colour $git_behind_count "
     fi
-    echo -e "\e[93m ${git_curr_branch} \e[01;34m󰓦 ${git_modified_count} \e[01;32m ${git_ahead_count} \e[31m ${git_behind_count} "
 }
 PROMPT_COMMAND='GIT_PROMPT=$(format_git_prompt)'
-PS1='\[\[\e[32m\[\A \e[34m\[\w ${GIT_PROMPT}\[\e[0m\[\n󰘍 \$ '
+PS1='\[\e[32m\]\A \[\e[36m\]\w\[\e[0m\] ${GIT_PROMPT}\[\e[0m\]\n󰘍 \$ '
