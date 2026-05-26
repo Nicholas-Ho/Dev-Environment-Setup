@@ -1,11 +1,13 @@
 #!/bin/bash
 
-. /etc/os-release
-if [[ "$ID" == "ubuntu" ]]; then
-    sudo apt update
-    sudo apt install -y python3 python3-venv python3-pip
-elif [[ "$ID" == "arch" ]]; then
-    sudo pacman -S python python-pip
+if ! command -v python3 >/dev/null 2>&1; then
+    . /etc/os-release
+    if [[ "$ID" == "ubuntu" ]]; then
+        sudo apt update
+        sudo apt install -y python3 python3-venv python3-pip
+    elif [[ "$ID" == "arch" ]]; then
+        sudo pacman -S python python-pip
+    fi
 fi
 
 if [ ! -d "venv" ]; then
