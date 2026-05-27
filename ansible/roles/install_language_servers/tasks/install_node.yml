@@ -2,9 +2,9 @@
   ansible.builtin.set_fact:
     nvm_dir: >-
       {{
-        (ansible_env.XDG_CONFIG_HOME ~ '/nvm')
-        if (ansible_env.XDG_CONFIG_HOME is defined)
-        else (ansible_user_dir ~ '/.nvm')
+        (ansible_facts['env'].XDG_CONFIG_HOME ~ '/nvm')
+        if (ansible_facts['env'].XDG_CONFIG_HOME is defined)
+        else (ansible_facts['user_dir'] ~ '/.nvm')
       }}
 
 - name: Define nvm script path for convenience
@@ -39,4 +39,4 @@
     cmd: "source {{ nvm_script_path }} && nvm install node"
   args:
     executable: /bin/bash
-    creates: "{{ ansible_user_dir }}/.nvm/versions/node"
+    creates: "{{ ansible_facts['user_dir'] }}/.nvm/versions/node"

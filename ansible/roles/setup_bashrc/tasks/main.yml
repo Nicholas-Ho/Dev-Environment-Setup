@@ -1,6 +1,6 @@
 - name: Define .shellrc destination
   ansible.builtin.set_fact:
-    shellrc_dest: "{{ ansible_user_dir }}/.usr-setup"
+    shellrc_dest: "{{ ansible_facts['user_dir'] }}/.usr-setup"
 
 - name: Ensure destination directory exists
   ansible.builtin.file:
@@ -20,7 +20,7 @@
 
 - name: Ensure .shellrc is sourced in .bashrc
   ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
+    path: "{{ ansible_facts['user_dir'] }}/.bashrc"
     block: |
       # Personal shell setup
       source {{ shellrc_dest }}/.shellrc

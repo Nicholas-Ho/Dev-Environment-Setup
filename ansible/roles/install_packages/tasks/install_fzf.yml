@@ -3,12 +3,12 @@
   - name: Clone fzf git repository
     ansible.builtin.git:
       repo: https://github.com/junegunn/fzf.git
-      dest: "{{ ansible_user_dir }}/.fzf"
+      dest: "{{ ansible_facts['user_dir'] }}/.fzf"
       depth: 1
 
   - name: Install fzf using script
     ansible.builtin.shell:
-      cmd: "{{ ansible_user_dir }}/.fzf/install --key-bindings --completion --no-update-rc"
+      cmd: "{{ ansible_facts['user_dir'] }}/.fzf/install --key-bindings --completion --no-update-rc"
 
   when: ansible_facts['os_family'] == "Debian"
 
