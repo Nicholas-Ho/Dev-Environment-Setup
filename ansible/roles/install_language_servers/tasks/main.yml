@@ -53,11 +53,10 @@
   when: ansible_facts['os_family'] == "Archlinux"
 
 - name: Install Node-based language servers
-  ansible.builtin.shell:
-    cmd: "source {{ nvm_script_path }} && npm install -g {{ item }}"
+  community.general.npm:
+    name: "{{ item }}"
+    global: true
   loop:
     - bash-language-server
     - vim-language-server
     - yaml-language-server
-  args:
-    executable: /bin/bash
