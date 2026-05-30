@@ -60,7 +60,12 @@ format_git_prompt() {
         echo -e "\e[33m $git_curr_branch $modified_colour󰓦 $git_modified_count $ahead_colour $git_ahead_count $behind_colour $git_behind_count "
     fi
 }
-PROMPT_COMMAND='GIT_PROMPT=$(format_git_prompt)'
+
+prompt_marker() {  # OSC 133;A to make the start of the prompt (for terminal integration)
+    printf '\e]133;A\e\\'
+}
+
+PROMPT_COMMAND='GIT_PROMPT=$(format_git_prompt); prompt_marker'
 PS1='\[\e[37m\]\A \[\e[35m\]\w\[\e[0m\] ${GIT_PROMPT}\n\[\e[35m\]󰘍 \$ \[\e[0m\]'
 
 # zoxide setup
