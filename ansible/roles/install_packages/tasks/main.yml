@@ -22,6 +22,12 @@
     - name: Install fzf
       ansible.builtin.include_tasks: install_fzf.yml
 
+    - name: Install fd
+      ansible.builtin.include_tasks: install_fd.yml
+
+    - name: Install zoxide
+      ansible.builtin.include_tasks: install_zoxide.yml
+
   always:
     - name: Delete temporary downloads directory
       ansible.builtin.file:

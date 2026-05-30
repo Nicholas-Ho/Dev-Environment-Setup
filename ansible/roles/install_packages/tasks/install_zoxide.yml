@@ -1,0 +1,11 @@
+#   ## Debian-based: TODO
+# - block:
+#   when: ansible_facts['os_family'] == "Debian"
+
+  ## Arch
+- name: Install zoxide (pacman)
+  community.general.pacman:
+    name: zoxide
+    update_cache: true
+  when: ansible_facts['os_family'] == "Archlinux"
+  become: true

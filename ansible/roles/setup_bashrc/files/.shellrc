@@ -2,6 +2,8 @@
 
 # === A setup script to be called in .bashrc or equivalent ===
 
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # Add ~/.local/bin to PATH (required for some user-level installations such as pylsp)
 usr_bin="$HOME/.local/bin"
 if [ -d "${usr_bin}" ] && [[ ":$PATH:" != *":${usr_bin}:"* ]]; then
@@ -10,8 +12,16 @@ fi
 
 # fzf setup
 eval "$(fzf --bash)" # Usually in .bashrc, moved here to keep fzf setup together
-export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
-complete -o bashdefault -o default -F _fzf_path_completion vim
+export FZF_DEFAULT_COMMAND="fd -H -t f -E .git -E '{,.}venv'"
+_fzf_setup_completion path vim
+
+_fzf_compgen_path() {
+  fd -H -E .git -E '{,.}venv' "$1"
+}
+
+_fzf_compgen_dir() {
+  fd -H -t d -E .git -E '{,.}venv' "$1"
+}
 
 # Additional environment variables
 # export BASH_IDE_LOG_LEVEL=error # for bash-language-server
@@ -52,3 +62,6 @@ format_git_prompt() {
 }
 PROMPT_COMMAND='GIT_PROMPT=$(format_git_prompt)'
 PS1='\[\e[37m\]\A \[\e[35m\]\w\[\e[0m\] ${GIT_PROMPT}\n\[\e[35m\]󰘍 \$ \[\e[0m\]'
+
+# zoxide setup
+eval "$(zoxide init bash)"
