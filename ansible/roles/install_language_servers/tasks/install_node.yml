@@ -39,4 +39,4 @@
     cmd: "source {{ nvm_script_path }} && nvm install node"
   args:
     executable: /bin/bash
-    creates: "{{ ansible_facts['user_dir'] }}/.nvm/versions/node"
+    creates: "{{ nvm_dir }}/versions/node"
