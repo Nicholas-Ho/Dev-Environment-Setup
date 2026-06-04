@@ -20,7 +20,3 @@
     - name: Set up .bashrc
       ansible.builtin.include_role:
         name: setup_bashrc
-
-    - name: Set up OCaml development
-      ansible.builtin.include_role:
-        name: setup_ocaml_dev

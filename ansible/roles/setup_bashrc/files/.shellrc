@@ -30,8 +30,8 @@ export BACKGROUND_ANALYSIS_MAX_FILES=0 # for bash-language-server
 # Git autocompletion
 source /usr/share/git/completion/git-completion.bash
 
-# opam setup (OCaml)
-eval $(opam env --switch=default)
+# opam setup (OCaml - only if opam is installed and initialised)
+command -v opam > /dev/null 2>&1 && [ -f "$HOME/.opam/config" ] && eval $(opam env --switch=default)
 
 # Override prompt
 format_git_prompt() {
