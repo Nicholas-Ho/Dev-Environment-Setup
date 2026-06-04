@@ -1,0 +1,19 @@
+- name: Install opam
+  community.general.pacman:
+    update_cache: true
+    name: opam
+  become: true
+
+- name: Initialise opam
+  block:
+    - name: Check whether opam is initialised
+      ansible.builtin.stat:
+        path: "{{ ansible_facts['user_dir'] }}/.opam/config"
+      register: opam_config
+
+    - name: Initialise opam if required
+      ansible.builtin.shell: opam init -y
+      when: not opam_config.stat.exists
+
+- name: Install platform tools
+  ansible.builtin.command: opam install dune ocaml-lsp-server odoc ocamlformat utop -y

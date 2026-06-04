@@ -121,6 +121,7 @@ let g:lsc_server_commands = {
 \     },
 \   },
 \   'yaml': 'yaml-language-server --stdio',
+\   'ocaml': 'ocamllsp --stdio',
 \ }
 
 " lightline.vim
