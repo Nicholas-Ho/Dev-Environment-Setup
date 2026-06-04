@@ -40,10 +40,6 @@ set expandtab
 set wildmenu
 set wildmode=longest:full,full
 
-" Mouse support
-set mouse=a
-set ttymouse=sgr
-
 " === Plugin ===
 
 " Install vim-plug if missing
