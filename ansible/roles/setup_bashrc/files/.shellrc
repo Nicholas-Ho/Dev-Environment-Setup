@@ -31,7 +31,17 @@ export BACKGROUND_ANALYSIS_MAX_FILES=0 # for bash-language-server
 source /usr/share/git/completion/git-completion.bash
 
 # opam setup (OCaml - only if opam is installed and initialised)
-command -v opam > /dev/null 2>&1 && [ -f "$HOME/.opam/config" ] && eval $(opam env --switch=default)
+if command -v opam > /dev/null 2>&1 && [ -f "$HOME/.opam/config" ]; then
+    eval $(opam env)
+    _opam_env_hook() {
+         local previous_exit_status=$?;
+         eval $(opam env --shell=bash --readonly 2> /dev/null);
+         return $previous_exit_status;
+    };
+    if ! [[ "$PROMPT_COMMAND" =~ _opam_env_hook ]]; then
+        PROMPT_COMMAND="_opam_env_hook; $PROMPT_COMMAND";
+    fi
+fi
 
 # Override prompt
 format_git_prompt() {
@@ -68,7 +78,7 @@ prompt_marker() {  # OSC 133;A to make the start of the prompt (for terminal int
     printf '\e]133;A\e\\'
 }
 
-PROMPT_COMMAND='GIT_PROMPT=$(format_git_prompt); prompt_marker'
+PROMPT_COMMAND="GIT_PROMPT=\$(format_git_prompt); prompt_marker; $PROMPT_COMMAND"
 PS1='\[\e[37m\]\A \[\e[35m\]\w\[\e[0m\] ${GIT_PROMPT}\n\[\e[35m\]󰘍 \$ \[\e[0m\]'
 
 # zoxide setup
